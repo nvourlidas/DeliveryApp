@@ -1,11 +1,11 @@
 <template>
     <div>
         <CAlert color="success" :visible="liveExampleVisible"
-              >Επιτυχημέμη Αποστολή Παραγγελείας</CAlert
+              >Επιτυχημέμη Αποστολή Παραγγελίας</CAlert
             >
         <CCard>
             <CForm @submit.prevent="AddOrder" ref="orderform">
-                <h2 style="text-align: center;">Νέα Παραγγελεία</h2>
+                <h2 style="text-align: center;">Νέα Παραγγελία</h2>
                 <CCardbody class="card">
                     <CAlert color="danger" :visible="liveExampleVisible3" style="width: 70%"
               >Το πεδίο δεν μπορεί να είναι άδειο</CAlert
@@ -41,7 +41,7 @@
               />
                 </CCardbody>
                 <CCardFooter style="text-align: center">
-            <CButton  type="submit" size="bg" color="primary" ><CIcon name="cil-check-circle"/> Αποστολή Παραγγελείας</CButton>
+            <CButton  type="submit" size="bg" color="primary" ><CIcon name="cil-check-circle"/> Αποστολή Παραγγελίας</CButton>
           </CCardFooter>
             </CForm>
         </CCard>

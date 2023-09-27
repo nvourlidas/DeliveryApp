@@ -9,7 +9,7 @@
                 <CCol md="12" >    
                     <CCard style="margin-bottom: 2rem;">
                         <CCardHeader style="text-align: center;">
-                            <h3>Αριθμός Παραγγελείας #{{ entry.orderid }}</h3>
+                            <h3>Αριθμός Παραγγελίας #{{ entry.orderid }}</h3>
                         </CCardHeader>
                         <div class="card1">
                         <div class="left-div">
@@ -20,7 +20,7 @@
                     <div class="right-div">
                         <h5>Status:</h5>
                         <div v-if="entry.state == 1">
-                        <CButton color="warning" shape="rounded-pill" @click="UpdateStatus(entry.orderid)">Aποδοχή Παραγγελείας</CButton>
+                        <CButton color="warning" shape="rounded-pill" @click="UpdateStatus(entry.orderid)">Aποδοχή Παραγγελίας</CButton>
                     </div>
                     <div v-if="entry.state == 2">
                         <CButton color="info" shape="rounded-pill">Αποδέχθηκε</CButton>
@@ -28,7 +28,7 @@
                             <h5>Διανομέας: {{ e.name }} {{ e.surname }}</h5>
 
                             <div v-if="e.userid == userid">
-                                <CButton color="success" shape="rounded-pill" @click="UpdateStatus2(entry.orderid)">Ολοκλήρωση Παραγγελείας</CButton>
+                                <CButton color="success" shape="rounded-pill" @click="UpdateStatus2(entry.orderid)">Ολοκλήρωση Παραγγελίας</CButton>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@ export default {
         },
 
         UpdateStatus(id){
-            if(confirm("Είστε σίγουρος ότι θέλετε να αποδεχτήτε την παραγγελεία;")){
+            if(confirm("Είστε σίγουρος ότι θέλετε να αποδεχτήτε την παραγγελία;")){
             axios.post('/restApi/api/UpdateStatus.php',{userid: this.userid, orderid: id, state: 2})
             .then(res=>{
           for(var i=0; i<this.table.length; i++){

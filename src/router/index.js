@@ -8,7 +8,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: DefaultLayout,
-    redirect: '/main/CreateOrder',
+    redirect: '/main/Home',
     children: [
       {
         path: '/dashboard',
@@ -18,6 +18,11 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () =>
           import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue'),
+      },
+      {
+        path: '/main/Home',
+        name: 'Home',
+        component: () => import('@/views/main/Home.vue'),
       },
       {
         path: '/main/CreateOrder',

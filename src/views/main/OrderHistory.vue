@@ -11,7 +11,7 @@
                 <CCol md="12" >    
                     <CCard >
                         <CCardHeader style="text-align: center;">
-                            <h3>Αριθμός Παραγγελείας #{{ entry.orderid }}</h3>
+                            <h3>Αριθμός Παραγγελίας #{{ entry.orderid }}</h3>
                         </CCardHeader>
                         <div class="card1">
                         <div class="left-div">
@@ -43,6 +43,7 @@
             </CRow>
         </div>
     </div>
+    <br />
 </template>
 
 <script>

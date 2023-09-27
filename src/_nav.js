@@ -11,19 +11,19 @@ export default [
   // },
   {
           component: 'CNavItem',
-          name: 'Νέα Παραγγελεία',
+          name: 'Νέα Παραγγελία',
           to: '/main/CreateOrder',
         },
 
         {
           component: 'CNavItem',
-          name: 'Ανοιχτές Παραγγελείες',
+          name: 'Ανοιχτές Παραγγελίες',
           to: '/main/ViewOpenOrders',
         },
 
         {
           component: 'CNavItem',
-          name: 'Ιστορικό Παραγγελειών',
+          name: 'Ιστορικό Παραγγελιών',
           to: '/main/OrderHistory',
         },
   // {

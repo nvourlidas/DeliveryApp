@@ -1,7 +1,7 @@
 export default [
     {
         component: 'CNavItem',
-        name: 'Ανοιχτές Παραγγελείες',
+        name: 'Ανοιχτές Παραγγελίες',
         to: '/main/DelOpenOrders',
       },
       

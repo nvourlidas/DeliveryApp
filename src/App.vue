@@ -6,7 +6,7 @@
         <div v-if="utype==2">
           <CAlert color="info" dismissible @click="push">
             <CIcon class="mx-2" icon="cil-bell" size="lg" />
-            <h3>Νέα Παραγγελεία</h3> 
+            <h3>Νέα Παραγγελία</h3> 
             Διεύθυνση: {{ entry.address }}</CAlert>   
         </div>   
       </div>
