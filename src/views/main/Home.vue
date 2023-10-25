@@ -1,16 +1,16 @@
 <template>
     <div>
-        <div class="container">
+      <div class="container">
         <h1 class="header">Καλώς Ήρθατε</h1>
-        <p class="subheader">Αρχική Σελίδα Dellivery App!</p>
-        
+        <p class="subheader">Αρχική Σελίδα Speedelivery App!</p>   
+      </div>
     </div>
-    </div>
-</template>
-
-<script>
-export default{}
-</script>
+  </template>
+  
+  <script>
+ 
+  </script>
+  
 
 
 <style scoped>

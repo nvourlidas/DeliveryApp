@@ -7,6 +7,17 @@
             <CForm @submit.prevent="AddOrder" ref="orderform">
                 <h2 style="text-align: center;">Νέα Παραγγελία</h2>
                 <CCardbody class="card">
+
+                    <CFormInput
+              label="Όνομα Καταστήματος"
+              v-model="sname"
+              name="sname"
+              size="lg"
+              horizontal
+              placeholder="Προσθήκη Καταστήματος..."
+              style="width: 70%; margin-bottom: 1rem;"
+            />
+
                     <CAlert color="danger" :visible="liveExampleVisible3" style="width: 70%"
               >Το πεδίο δεν μπορεί να είναι άδειο</CAlert
             >
@@ -59,6 +70,7 @@ export default {
             address: '',
             price: '',
             texta: '',
+            sname: '',
             user:localStorage.getItem('userid'),
             liveExampleVisible: false,
             liveExampleVisible2: false,
@@ -72,25 +84,30 @@ export default {
     },
         AddOrder(){
             if(confirm("Είστε σίγουρος ότι θέτε να γίνει Αποστολή;")){
-                if(this.address != '') {
+                if(this.address != '' || this.sname != '') {
                 if(this.isNumeric(this.price) === false || this.price == ''){
                     this.liveExampleVisible2 = true;
                 }
                 else {
-            axios.post('/restApi/api/CreateOrder.php', {
+            axios.post('/restApi/api/ACreateOrder.php', {
                 address: this.address,
                 price: this.price,
                 texta: this.texta,
                 userid: this.user,
+                sname: this.sname,
             })
             .catch(err => console.log(err));
 
+            this.notif()
             this.liveExampleVisible = true;
              this.address = ''
                 this.price = ''
                 this.texta = ''
+                this.sname= ''
                 this.liveExampleVisible2 = false
                 this.liveExampleVisible3 = false
+
+                
         }
     }else {
         this.liveExampleVisible3 = true;
@@ -99,7 +116,16 @@ export default {
         setTimeout(() => {
             this.liveExampleVisible = false
         }, 3000)
-    }
+    },
+
+    notif(){
+        axios.post('/restApi/api/firebaseNot.php', {
+                userid: localStorage.getItem('userid'),
+                utype: localStorage.getItem('utype'),
+                name: this.sname
+            })
+            .catch(err => console.log(err));
+    },
     }
 }
 </script>

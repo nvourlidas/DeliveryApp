@@ -25,27 +25,85 @@ const routes = [
         component: () => import('@/views/main/Home.vue'),
       },
       {
-        path: '/main/CreateOrder',
+        path: '/main/Shops/CreateOrder',
         name: 'CreateOrder',
-        component: () => import('@/views/main/CreateOrder.vue'),
+        component: () => import('@/views/main/Shops/CreateOrder.vue'),
       },
       {
-        path: '/main/ViewOpenOrders',
+        path: '/main/Shops/ViewOpenOrders',
         name: 'ViewOpenOrders',
-        component: () => import('@/views/main/ViewOpenOrders.vue'),
+        component: () => import('@/views/main/Shops/ViewOpenOrders.vue'),
       },
       {
-        path: '/main/OrderHistory',
+        path: '/main/Shops/OrderHistory',
         name: 'OrderHistory',
-        component: () => import('@/views/main/OrderHistory.vue'),
+        component: () => import('@/views/main/Shops/OrderHistory.vue'),
       },
 
       {
-        path: '/main/DelOpenOrders',
+        path: '/main/Dels/DelOpenOrders',
         name: 'DelOpenOrders',
-        component: () => import('@/views/main/DelOpenOrders.vue'),
+        component: () => import('@/views/main/Dels/DelOpenOrders.vue'),
       },
 
+      {
+        path: '/main/Dels/DelOrderHistory',
+        name: 'DelOrderHistory',
+        component: () => import('@/views/main/Dels/DelOrderHistory.vue'),
+      },
+
+      {
+        path: '/main/Admins/AddUser',
+        name: 'AddUser',
+        component: () => import('@/views/main/Admins/AddUser.vue'),
+      },
+
+      {
+        path: '/main/Admins/AddShop',
+        name: 'AddShop',
+        component: () => import('@/views/main/Admins/AddShop.vue'),
+      },
+      {
+        path: '/main/Admins/ReadDel',
+        name: 'ReadDel',
+        component: () => import('@/views/main/Admins/ReadDel.vue'),
+      },
+      {
+        path: '/main/Admins/DelModal',
+        name: 'DelModal',
+        component: () => import('@/views/main/Admins/DelModal.vue'),
+      },
+      {
+        path: '/main/Admins/ACreateOrders',
+        name: 'ACreateOrders',
+        component: () => import('@/views/main/Admins/ACreateOrders.vue'),
+      },
+
+      {
+        path: '/main/Admins/AdminOpen',
+        name: 'AdminOpen',
+        component: () => import('@/views/main/Admins/AdminOpen.vue'),
+      },
+      {
+        path: '/main/Admins/TodayOrders',
+        name: 'TodayOrders',
+        component: () => import('@/views/main/Admins/TodayOrders.vue'),
+      },
+      {
+        path: '/main/Admins/Istoriko',
+        name: 'Istoriko',
+        component: () => import('@/views/main/Admins/Istoriko.vue'),
+      },
+      {
+        path: '/main/Admins/ReadShop',
+        name: 'ReadShop',
+        component: () => import('@/views/main/Admins/ReadShop.vue'),
+      },
+      {
+        path: '/main/Admins/EditUser',
+        name: 'EditUser',
+        component: () => import('@/views/main/Admins/EditUser.vue'),
+      },
       {
         path: '/theme',
         name: 'Theme',
@@ -279,6 +337,7 @@ const routes = [
             name: 'Modals',
             component: () => import('@/views/notifications/Modals.vue'),
           },
+          
         ],
       },
       {

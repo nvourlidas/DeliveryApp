@@ -1,75 +1,96 @@
 <template>
-    <div class="notif"
-      v-for="(entry, id) in notifications"
-                :item="entry"
-                :key="id">
-        <div v-if="utype==2">
-          <CAlert color="info" dismissible @click="push">
-            <CIcon class="mx-2" icon="cil-bell" size="lg" />
-            <h3>Νέα Παραγγελία</h3> 
-            Διεύθυνση: {{ entry.address }}</CAlert>   
-        </div>   
-      </div>
+
     
   <router-view />
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+
 export default {
-  data() {
+  data(){
     return {
-      notifications: [],
-      utype:localStorage.getItem('utype'),
-    };
+      userid:localStorage.getItem('userid')
+    }
   },
 
-  created() {
-    this.fetchNotifications();
-    setInterval(this.fetchNotifications, 7000); 
+  created(){
+    this.check()
+    setInterval(this.check, 1000 * 60); 
   },
-
   methods: {
-    async fetchNotifications() {
-      try {
-        const response = await axios.get('/restApi/api/notifications.php'); 
-        this.notifications = response.data;
-      } catch (error) {
-        console.error('Failed to fetch notifications:', error);
-      }
-    },
-
-    push(){
-      this.$router.push('/main/DelOpenOrders');
-      
-    },
-  },
+    check(){
+      axios.post('restApi/api/CheckOrder.php', {
+        userid: this.userid
+      })
+    }
+  }
 }
 </script>
+
+<script setup>
+
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken, onMessage} from "firebase/messaging";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAVsbfmYtaa0YinhM_FMl7czfoYW1q7xdw",
+    authDomain: "deliveryapp-a9973.firebaseapp.com",
+    projectId: "deliveryapp-a9973",
+    storageBucket: "deliveryapp-a9973.appspot.com",
+    messagingSenderId: "648889998661",
+    appId: "1:648889998661:web:386ca78056124930b0f22c"
+};
+
+
+const app = initializeApp(firebaseConfig)
+const utype = localStorage.getItem('utype')
+const userid = localStorage.getItem('userid')
+app
+const messaging = getMessaging();
+onMessage(messaging, (payload) => {
+  console.log('Message received. ', payload);
+  console.log('Message TEST. ', payload.notification.body);
+  if(utype == 2){
+  const message = payload.notification.title+ ' ' +payload.notification.body;
+  alert(message);
+  }else if(utype == 3){
+    const message = payload.notification.title+ ' ' +payload.notification.body;
+    alert(message);
+  }
+  
+});
+
+
+getToken(messaging, { vapidKey: 'BN9tEOD1cNhkmva6KfGjFz-yUP3rCzDoPEXjzQ0SFbFRR0ZBWVjYY-zkIvHzL4ixKgnd5zc_ChBuWQ_1ub-bZVI' }).then((currentToken) => {
+  if (currentToken) {
+    console.log("tOKEN IS:",currentToken)
+    localStorage.setItem('ftoken', currentToken)
+    
+
+axios.post('/restApi/api/fbtokens.php', {
+              token: currentToken,
+              utype: utype,
+              userid: userid,
+          })
+          .catch(err => console.log(err));
+
+  } else {
+    
+    console.log('No registration token available. Request permission to generate one.');
+   
+  }
+}).catch((err) => {
+  console.log('An error occurred while retrieving token. ', err);
+});
+
+
+
+</script>
+
 
 <style lang="scss">
 // Import Main styles for this application
 @import 'styles/style';
 </style>
 
-<style scoped>
-
-@keyframes slideInFromLeft {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.notif{
-  width:50%;
-  margin-left: 25%;
-  position:fixed;
-  z-index: 9999;  
-  animation: 0.5s ease-out 0s 1 slideInFromLeft;
-}
-
-
-</style>

@@ -24,8 +24,9 @@
       />
     </CSidebarBrand> -->
     
-    <AppSidebarNav v-if="utype == 1"/>
+    <AppSidebarNav v-if="utype == 3"/>
     <AppSidebarNav2 v-if="utype == 2"/>
+    <AppSidebarNav3 v-if="utype == 1"/>
     <CSidebarToggler
       class="d-none d-lg-flex"
       @click="$store.commit('toggleUnfoldable')"
@@ -38,6 +39,7 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { AppSidebarNav } from './AppSidebarNav'
 import { AppSidebarNav2 } from './AppSidebarNav2'
+import { AppSidebarNav3 } from './AppSidebarNav3'
 import { logoNegative } from '@/assets/brand/logo-negative'
 import { sygnet } from '@/assets/brand/sygnet'
 import axios from 'axios'
@@ -47,6 +49,7 @@ export default {
   components: {
     AppSidebarNav,
     AppSidebarNav2,
+    AppSidebarNav3,
   },
 
   data(){

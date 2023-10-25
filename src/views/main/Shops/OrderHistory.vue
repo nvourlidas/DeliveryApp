@@ -7,9 +7,9 @@
                 :item="entry"
                 :key="id">
                 
-            <CRow v-if="entry.state == 3 && entry.odate == date">
+            <CRow>
                 <CCol md="12" >    
-                    <CCard >
+                    <CCard style="margin-bottom: 2rem; border: 2px solid #000;">
                         <CCardHeader style="text-align: center;">
                             <h3>Αριθμός Παραγγελίας #{{ entry.orderid }}</h3>
                         </CCardHeader>
@@ -41,6 +41,7 @@
             
                 </CCol>
             </CRow>
+            <br /><br /><br />
         </div>
     </div>
     <br />
@@ -58,16 +59,37 @@ export default {
             table: [],
             useraccept: '',
             date: null,    
+            userid: localStorage.getItem('userid'),
            }
     },
 
-    created() {
-     axios.get('/restApi/api/ReadOrder.php')
-     .then(res => {this.table = res.data,
+    methods: {
+        get(dt){
+            axios.get('/restApi/api/ReadOrder.php')
+     .then(res => {this.table = []
+        var j=0;
+        for(var i=0; i<res.data.length; i++){
+            if(res.data[i].state == 3 && res.data[i].odate == dt && res.data[i].userid == this.userid){
+                this.table[j] = res.data[i]
+                j++
+            }
+        }
     this.useraccept=localStorage.getItem('name')
      })
      .catch(err => console.log(err));
+        }
     },
+
+    watch: {
+    date: {
+      immediate: true, 
+      handler(newDate) {
+        if (newDate !== null) {
+          this.get(newDate);
+        }
+      },
+    },
+  },
 }
 </script>
 <style scoped>

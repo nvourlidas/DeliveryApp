@@ -24,10 +24,7 @@
             <CIcon class="mx-2" icon="cil-bell" size="lg" />
           </CNavLink>
         </CNavItem> -->
-        <div v-for="(message, index) in notifications" :key="index" :message="message">
-        <CAlert color="warning"
-              >A simple warning alert—check it out!</CAlert>
-            </div>
+        <CButton color="primary" @click="logout"><CIcon icon="cil-lock-locked" class="me-2" />Log Out</CButton>
         <!--<CNavItem>
           <CNavLink href="#">
             <CIcon class="mx-2" icon="cil-list" size="lg" />
@@ -84,7 +81,17 @@ export default {
         }
   })
         .catch(err => console.log(err));
-  
+        console.log(this.token)
+  },
+
+  methods:{
+    logout(){
+      localStorage.removeItem('token');
+      localStorage.removeItem('userid')
+      localStorage.removeItem('utype')
+      this.$router.push('/pages/login');
+      console.log(this.token)
+    }
   }
 
 }
