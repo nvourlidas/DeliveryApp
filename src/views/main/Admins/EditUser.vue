@@ -1,6 +1,6 @@
 <template>
-   <CButton color="primary" @click="visibleA = !visibleA, visibleB = false" style="margin-right: 2%;">Καταστήματα</CButton>
-   <CButton color="primary" @click="visibleB = !visibleB, visibleA = false">Διανομείς</CButton>
+   <CButton :color="bcolorA" @click="visibleA = !visibleA, visibleB = false, color()" style="margin-right: 2%;">Καταστήματα</CButton>
+   <CButton :color="bcolorB" @click="visibleB = !visibleB, visibleA = false, color()">Διανομείς</CButton>
    <CRow>
     <CCol xs="6">
       <CCollapse :visible="visibleA">
@@ -94,6 +94,8 @@ export default {
             uid: '',
             uname: '',
             pass: '',
+            bcolorA: 'primary',
+            bcolorB: 'primary',
         }
     },
 
@@ -133,6 +135,20 @@ export default {
                 this.uv = true
                 this.pv = true
             }
+        },
+
+        color(){
+          if(this.visibleA){
+            this.bcolorA = 'warning'
+          }else{
+            this.bcolorA = 'primary'
+          }
+
+          if(this.visibleB){
+            this.bcolorB = 'warning'
+          }else{
+            this.bcolorB = 'primary'
+          }
         },
 
         delete1(id){

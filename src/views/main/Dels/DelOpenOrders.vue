@@ -82,7 +82,7 @@ export default {
         UpdateStatus(id){
             var count =0
             for(var i=0; i<this.table.length; i++){
-                if(this.table[i].useraccept != null && this.table[i].oloruser == null){
+                if(this.table[i].useraccept == this.userid && this.table[i].oloruser == null){
                     count += 1
                 }
             }

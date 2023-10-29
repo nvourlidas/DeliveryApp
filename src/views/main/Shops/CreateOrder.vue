@@ -19,12 +19,7 @@
               placeholder="Προσθήκη Διεύθυνσης..."
               style="width: 70%; margin-bottom: 1rem;"
             />
-             <CButton class="butt" @click="startRecognition" :disabled="listening">
-              <CIcon :icon="cilMic" size="xl"></CIcon>
-          </CButton>
-          <CButton class="butt" @click="stopRecognition" :disabled="!listening">
-            <CIcon :icon="cilX" size="xl"></CIcon>
-          </CButton>
+             
           <CButton class="butt1" @click="clear(1)">X</CButton>
          </CRow>
             <CAlert color="danger" :visible="liveExampleVisible2" style="width: 70%"
