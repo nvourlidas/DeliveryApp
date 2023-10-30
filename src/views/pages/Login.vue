@@ -83,7 +83,7 @@ export default {
     return {
       username: '',
       password:'',
-      
+      userid: '',
     
     }
   },
@@ -93,9 +93,11 @@ export default {
         .then(resp=>{
           if(resp.data.res==1){
              localStorage.setItem('token',resp.data.jwt);
+             this.userid=resp.data.userid;
+             this.online(this.userid)
       this.$router.push('/')
         }else{
-          alert("LATHOS");
+          alert("Τα στοιχεία είναι Λανθασμένα");
         }
         })
         .catch(err => console.log(err));
@@ -103,6 +105,10 @@ export default {
     validator (val) {
       return val ? val.length >= 1 : false
     },
+
+    online(id){
+      axios.post('/restApi/api/online.php',{userid: id, status:0})
+    }
   },
 }
 </script>

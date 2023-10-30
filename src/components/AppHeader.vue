@@ -64,6 +64,7 @@ export default {
     return{
       token:localStorage.getItem('token'),
       user:[],
+      userid: localStorage.getItem('userid')
     }
   },
   setup() {
@@ -79,6 +80,7 @@ export default {
           this.user=resp.data.user
           localStorage.setItem('userid',resp.data.user.userid)
           localStorage.setItem('utype',resp.data.user.utype)
+          
         }else{
           this.$router.push('/pages/login')
         }
@@ -86,6 +88,12 @@ export default {
         .catch(err => console.log(err));
         console.log(this.token)
   },
+
+  methods: {
+    online(){
+      axios.post('/restApi/api/online.php',{userid: this.userid, status:1})
+    }
+  }
 
 }
 </script>

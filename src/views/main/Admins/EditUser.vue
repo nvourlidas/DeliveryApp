@@ -2,7 +2,7 @@
    <CButton :color="bcolorA" @click="visibleA = !visibleA, visibleB = false, color()" style="margin-right: 2%;">Καταστήματα</CButton>
    <CButton :color="bcolorB" @click="visibleB = !visibleB, visibleA = false, color()">Διανομείς</CButton>
    <CRow>
-    <CCol xs="6">
+    <CCol xs="9">
       <CCollapse :visible="visibleA">
         <div  v-for="(entry, id) in table"
                 :item="entry"
@@ -14,7 +14,7 @@
           <CCardBody>
             <div>
                 <div class="cont">
-                 <h3 class="element">Username: <div v-if="uv == true">{{ entry.username }}</div></h3>
+                 <h3 class="element"><b>Username:</b> <div v-if="uv == true">{{ entry.username }}</div></h3>
                  <input v-model="uname" v-if="uv == false && uid == id">
                  <CButton color="primary" class="element1" @click="uvisible(id)" v-if="uv == true">
                     <CIcon icon="cil-pencil"  /></CButton>
@@ -23,7 +23,16 @@
                     <CButton color="danger" v-if="uv == false && uid==id" @click="uv=true, uname=''">X</CButton>
                  </div>
                  <div class="cont">
-                 <h3 class="element">Password: <div v-if="pv == true"> {{ entry.password }}</div></h3>
+                 <h3 class="element"><b>Όνομα Καταστήματος:</b> <div v-if="uo == true">{{ entry.name }}</div></h3>
+                 <input v-model="oname" v-if="uo == false && uid == id">
+                 <CButton color="primary" class="element1" @click="ovisible(id)" v-if="uo == true">
+                    <CIcon icon="cil-pencil"  /></CButton>
+                    <CButton color="primary" class="element1" @click="uchange(entry.userid)" v-if="uo == false && uid==id">
+                    <CIcon icon="cil-check-circle"  /></CButton>
+                    <CButton color="danger" v-if="uo == false && uid==id" @click="uo=true, uname=''">X</CButton>
+                 </div>
+                 <div class="cont">
+                 <h3 class="element"><b>Password:</b> <div v-if="pv == true"> {{ entry.password }}</div></h3>
                  <input v-model="pass" v-if="pv == false && uid == id">
                  <CButton color="primary" class="element1" @click="pvisible(id)" v-if="pv == true">
                     <CIcon icon="cil-pencil"  /></CButton>
@@ -49,8 +58,26 @@
             </CCardHeader>
           <CCardBody>
             <div>
+              <div class="cont">
+                 <h3 class="element"><b>Όνομα:</b> <div v-if="uo == true">{{ entry.name }}</div></h3>
+                 <input v-model="oname" v-if="uo == false && uid == id">
+                 <CButton color="primary" class="element1" @click="ovisible(id)" v-if="uo == true">
+                    <CIcon icon="cil-pencil"  /></CButton>
+                    <CButton color="primary" class="element1" @click="uchange(entry.userid)" v-if="uo == false && uid==id">
+                    <CIcon icon="cil-check-circle"  /></CButton>
+                    <CButton color="danger" v-if="uo == false && uid==id" @click="uo=true, uname=''">X</CButton>
+                 </div>
+                 <div class="cont">
+                 <h3 class="element"><b>Επίθετο:</b> <div v-if="su == true">{{ entry.surname }}</div></h3>
+                 <input v-model="surname" v-if="su == false && uid == id">
+                 <CButton color="primary" class="element1" @click="survisible(id)" v-if="su == true">
+                    <CIcon icon="cil-pencil"  /></CButton>
+                    <CButton color="primary" class="element1" @click="uchange(entry.userid)" v-if="su == false && uid==id">
+                    <CIcon icon="cil-check-circle"  /></CButton>
+                    <CButton color="danger" v-if="su == false && uid==id" @click="su=true, uname=''">X</CButton>
+                 </div>
                 <div class="cont">
-                 <h3 class="element">Username: <div v-if="uv == true">{{ entry.username }}</div></h3>
+                 <h3 class="element"><b>Username: </b><div v-if="uv == true">{{ entry.username }}</div></h3>
                  <input v-model="uname" v-if="uv == false && uid == id">
                  <CButton color="primary" class="element1" @click="uvisible(id)" v-if="uv == true">
                     <CIcon icon="cil-pencil"  /></CButton>
@@ -59,7 +86,7 @@
                     <CButton color="danger" v-if="uv == false && uid==id" @click="uv = true, uname = ''">X</CButton>
                  </div>
                  <div class="cont">
-                 <h3 class="element">Password: <div v-if="pv == true"> {{ entry.password }}</div></h3>
+                 <h3 class="element"><b>Password: </b><div v-if="pv == true"> {{ entry.password }}</div></h3>
                  <input v-model="pass" v-if="pv == false && uid == id">
                  <CButton color="primary" class="element1" @click="pvisible(id)" v-if="pv == true">
                     <CIcon icon="cil-pencil"  /></CButton>
@@ -91,8 +118,12 @@ export default {
             visibleB: false,
             uv: true,
             pv: true,
+            uo: true,
+            su: true,
             uid: '',
             uname: '',
+            oname: '',
+            surname: '',
             pass: '',
             bcolorA: 'primary',
             bcolorB: 'primary',
@@ -101,7 +132,7 @@ export default {
 
     created(){
         this.get()
-        setInterval(this.get, 5000);
+        setInterval(this.get, 3000);
     },
 
     methods:{
@@ -118,22 +149,36 @@ export default {
             this.pv = false
             this.uid = id
         },
+        ovisible(id){
+            this.uo = false
+            this.uid = id
+        },
+        survisible(id){
+            this.su = false
+            this.uid = id
+        },
 
         uchange(id){
             if(confirm("Είστε σίγουρος ότι θέτε να γίνει Αλλαγή;")){
-                axios.post('restApi/api/UpdateUsers.php',{
+                axios.post('/restApi/api/UpdateUsers.php',{
                     userid : id,
                     username: this.uname,
-                    password: this.pass
+                    password: this.pass,
+                    name: this.oname,
+                    surname: this.surname,
                 })
                 .then(
-                    this.get(),
+                    
                     this.uname='',
                     this.pass='',
-                )
+                    this.oname ='',
+                    this.surname ='',
+                ).catch(err => console.log(err));
                 
                 this.uv = true
                 this.pv = true
+                this.uo = true
+                this.su = true
             }
         },
 

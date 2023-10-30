@@ -12,7 +12,7 @@
             
             <template #icon><CIcon icon="cil-people" height="36"/></template>
             <template #title>{{entry.name}} {{ entry.surname }}</template>
-            <template #value>Ανοιχτές: {{ entry.accorders }} <br />
+            <template #value>
                Ολοκληρωμένες: {{ entry.olorders }}<br/>
                Συνολικό Ποσό: {{ entry.tziros }}&euro;<br/>
               <CButton color="success" @click="showModal(entry.userid,2)">Λεπτομέριες</CButton></template>
@@ -37,7 +37,7 @@
             
             <template #icon><CIcon icon="cil-people" height="36"/></template>
             <template #title>{{entry.name}} {{ entry.surname }}</template>
-            <template #value>Ανοιχτές: {{ entry.accorders }} <br />
+            <template #value>
                Ολοκληρωμένες: {{ entry.olorders }}<br/>
                Συνολικό Ποσό: {{ entry.tziros }}&euro;<br/>
               <CButton color="success" @click="showModal(entry.userid,1)">Λεπτομέριες</CButton></template>
@@ -114,7 +114,6 @@ export default {
                 this.orders[j] = res.data[i];
                 j++;
                 }
-                console.log(year)
               } 
               
             }          

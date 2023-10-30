@@ -16,7 +16,8 @@ export default {
 
   created(){
     this.check()
-    setInterval(this.check, 1000 * 60); 
+    setInterval(this.check, 1000 * 60);
+    
   },
   methods: {
     check(){

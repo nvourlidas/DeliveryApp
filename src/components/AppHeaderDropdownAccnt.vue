@@ -100,11 +100,16 @@ export default {
         },
 
         logout(){
+          axios.post('/restApi/api/online.php',{userid: this.userid, status:1})
+          .then(res=>{
           localStorage.removeItem('token');
           localStorage.removeItem('userid')
           localStorage.removeItem('utype')
           this.$router.push('/pages/login');
           console.log(this.token)
+          console.log(res);
+        })
+          
         },
     },
     components: { CDropdownItem }

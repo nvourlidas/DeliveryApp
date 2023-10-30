@@ -20,7 +20,7 @@
               style="width: 70%; margin-bottom: 1rem;"
             />
              
-          <CButton class="butt1" @click="clear(1)">X</CButton>
+          <CButton color="danger"  class="butt" @click="clear(1)"><CIcon :icon="cilX" size="xl"></CIcon></CButton>
          </CRow>
             <CAlert color="danger" :visible="liveExampleVisible2" style="width: 70%"
               >Αυτό το πεδίο πρέπει να είναι αριθμός</CAlert> 
@@ -35,6 +35,7 @@
               placeholder="Ποσό..."
               style="width: 70%; margin-bottom: 1rem;"
             />
+            <CButton color="danger"  class="butt" @click="clear(3)"><CIcon :icon="cilX" size="xl"></CIcon></CButton>
             <CRow>
             <CFormTextarea
             floatingLabel="Σημειώσεις"
@@ -43,13 +44,8 @@
                 horizontal
                 rows="3"
                 style="width: 70%; margin-bottom: 1rem;"
-              /><CButton class="butt" @click="startRecognition2" :disabled="listening2">
-              <CIcon :icon="cilMic" size="xl"></CIcon>
-          </CButton>
-          <CButton class="butt" @click="stopRecognition2" :disabled="!listening2">
-            <CIcon :icon="cilX" size="xl"></CIcon>
-          </CButton>
-          <CButton class="butt1" @click="clear(2)">X</CButton>
+              />
+          <CButton @click="clear(2)" color="danger"  class="butt"><CIcon :icon="cilX" size="xl"></CIcon></CButton>
             </CRow>
                 </CCardbody>
                 <CCardFooter style="text-align: center">
@@ -62,9 +58,8 @@
 
 <script>
 import axios from 'axios'
-import annyang from 'annyang'
 import { CIcon } from '@coreui/icons-vue';
-import { cilMic, cilX } from '@coreui/icons';
+import {  cilX } from '@coreui/icons';
 export default {
     name: 'CreateOrder',
     data() {
@@ -78,11 +73,6 @@ export default {
             liveExampleVisible3: false,
             ftoken: localStorage.getItem('ftoken'),
             utype: localStorage.getItem('utype'),
-            inputText: "",
-            listening: false,
-            listening2: false,
-            recognition: null,
-            cilMic,
             cilX,
         };
     },
@@ -128,55 +118,16 @@ export default {
             })
                 .catch(err => console.log(err));
         },
-        startRecognition() {
-            if (annyang) {
-                annyang.setLanguage('el-GR');
-                annyang.start();
-                annyang.addCallback('result', (phrases) => {                
-                    this.address = phrases[0];                
-                });
-                this.listening = true;
-            }
-            else {
-                alert('Αυτός ο browser δεν υποστηρίζει speech to text!');
-            }
-        },
-        startRecognition2() {
-            if (annyang) {
-                annyang.setLanguage('el-GR');
-                annyang.start();
-                annyang.addCallback('result', (phrases) => {                
-                    this.texta = phrases[0];                
-                });
-                this.listening2 = true;
-            }
-            else {
-                alert('Αυτός ο browser δεν υποστηρίζει speech to text!');
-            }
-        },
 
         clear(n){
             if(n ==1){
             this.address = ''
-            }else{
+            }else if(n==2){
                 this.texta = ''
+            }else{
+                this.price =''
             }
-        },
-        stopRecognition() {
-            if (annyang) {
-                annyang.abort();
-                this.listening = false;
-            }
-        },
-
-        stopRecognition2() {
-            if (annyang) {
-                annyang.abort();
-                this.listening2 = false;
-            }
-        },
-
-        
+        },  
     },
     components: { CIcon }
 }
@@ -187,10 +138,6 @@ export default {
     padding-left: 2rem;
     border: none;
 }
-.speech-to-txt{
-    width: 7%;
-    content: icon;
-}
 
 img{
     padding-left: 0%;
@@ -199,7 +146,6 @@ img{
 
 .butt{
   display: inline-block;
-  background-color: #007bff; /* Background color */
   color: #fff; /* Text color */
   border: none;
   border-radius: 5px; /* Rounded corners */
@@ -210,27 +156,15 @@ img{
 
 }
 
-.butt1{
-  display: inline-block;
-  background-color: #f03405e4; /* Background color */
-  color: #fff; /* Text color */
-  border: none;
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer;
-  font-size: 16px;
-  width: 10%;
-  margin: 0.5%;
-
-}
 
 @media screen and (max-width: 600px) {
-  .butt, .butt1 {
-    width: 30%; /* Adjust the width as per your design needs */
-    font-size: 14px; /* Adjust the font size as per your design needs */
+  .butt {
+    width: 30%; 
+    font-size: 14px; 
   }
 }
 .butt:hover {
-  background-color: #0056b3; /* Change the background color on hover */
+  background-color: #e4a00d; /* Change the background color on hover */
 }
 
 
