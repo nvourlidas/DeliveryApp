@@ -100,6 +100,7 @@ export default {
         },
 
         logout(){
+          this.deleteToken()
           axios.post('/restApi/api/online.php',{userid: this.userid, status:1})
           .then(res=>{
           localStorage.removeItem('token');
@@ -111,6 +112,9 @@ export default {
         })
           
         },
+        deleteToken(){
+          axios.delete(`/restApi/api/DeleteToken.php/?userid=${this.userid}`)
+        }
     },
     components: { CDropdownItem }
 }

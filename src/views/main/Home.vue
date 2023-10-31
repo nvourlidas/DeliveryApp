@@ -58,7 +58,7 @@
     }
     @media (max-width: 600px) {
       img {
-        width: 150%;
+        width: 100%;
       }
 
       .header {

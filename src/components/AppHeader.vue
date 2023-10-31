@@ -64,7 +64,7 @@ export default {
     return{
       token:localStorage.getItem('token'),
       user:[],
-      userid: localStorage.getItem('userid')
+      userid: localStorage.getItem('userid'),
     }
   },
   setup() {
@@ -88,13 +88,6 @@ export default {
         .catch(err => console.log(err));
         console.log(this.token)
   },
-
-  methods: {
-    online(){
-      axios.post('/restApi/api/online.php',{userid: this.userid, status:1})
-    }
-  }
-
 }
 </script>
 
