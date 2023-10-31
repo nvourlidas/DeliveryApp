@@ -9,12 +9,8 @@
             <CRow>
                 <CCol md="12" >    
                     <CCard style="margin-bottom: 2rem; border: 2px solid #000;">
-                        <CCardHeader style="text-align: center;">
-                            <div v-for="(g, id1) in utable"
-                                :item="g"
-                                :key="id1">
-                                   <h3 v-if="entry.userid == g.userid">Κατάστημα: {{ g.name }} </h3> 
-                        </div>
+                        <CCardHeader style="text-align: center;">                           
+                                   <h3>Κατάστημα: {{ entry.name }} </h3> 
                         </CCardHeader>
                         <div class="card1">
                         <div class="left-div">
@@ -41,29 +37,18 @@
   </template>
   
   <script>
-import axios from 'axios';
+
   export default {
     props: {
       showModal: Boolean,
       orders: [],
     },
-    data(){
-      return {
-        utable: [],
-      }
-    },
-    created(){
-      this.getUsers();
-    },
+
+
     methods: {
       closeModal() {
         this.$emit('close');
       },
-
-      getUsers(){
-        axios.get('/restApi/api/ReadAllUsers.php')
-        .then(res => {this.utable = res.data}).catch(err => console.log(err))
-    },
     
     },
 

@@ -1,7 +1,8 @@
 <template>
     <div>
-      <CButton :color="bcolorA" @click="visibleA = !visibleA, visibleB = false, color()" style="margin: 2%;">Τρέχων Μήνας</CButton>
-      <CButton :color="bcolorB" @click="visibleB = !visibleB, visibleA = false, color()"> Από Πάντα</CButton>
+      <CButton :color="bcolorC" @click="visibleC = !visibleC, visibleB = false, visibleA = false, color()" >Σήμερα</CButton>
+      <CButton :color="bcolorA" @click="visibleA = !visibleA, visibleB = false, visibleC = false, color()" style="margin: 2%;">Τρέχων Μήνας</CButton>
+      <CButton :color="bcolorB" @click="visibleB = !visibleB, visibleA = false, visibleC = false, color()"> Από Πάντα</CButton>
       <CCollapse :visible="visibleA">
       <CRow>
         <CCol :xs="4" v-for="(entry, id) in Ctable"
@@ -52,6 +53,32 @@
     </DelModal>
   </div>
 </CCollapse>
+<CCollapse :visible="visibleC">
+      <CRow>
+        <CCol :xs="4" v-for="(entry, id) in Ttable"
+                :item="entry"
+                :key="id">
+                
+          <CWidgetStatsC  class="mb-3" title="Dels" inverse color="info">
+            
+            <template #icon><CIcon icon="cil-people" height="36"/></template>
+            <template #title>{{entry.name}} {{ entry.surname }}</template>
+            <template #value>
+              Ανοιχτές: {{ entry.accorders }}<br />
+               Ολοκληρωμένες: {{ entry.olorders }}<br/>
+               Συνολικό Ποσό: {{ entry.tziros }}&euro;<br/>
+              <CButton color="success" @click="showModal(entry.userid,3)">Λεπτομέριες</CButton></template>
+          </CWidgetStatsC>
+        
+        </CCol>
+      </CRow>
+      <div>
+    
+    <DelModal :show-modal="show" @close="show = false, orders= []" :orders="orders" >
+      
+    </DelModal>
+  </div>
+</CCollapse>
     </div>
 </template>
 
@@ -69,18 +96,23 @@ export default {
             orders: [],
             torders: [],
             Ctable: [],
+            Ttable:[],
             visibleA: false,
             visibleB: false,
+            visibleC: false,
             currentMonth: '',
             currentYear: '',
             bcolorA: 'primary',
             bcolorB: 'primary',
+            bcolorC: 'primary',
+            currentDate: '',
         };
     },
     created() {
         this.get();
         setInterval(this.get, 5000);
         this.currentmy()
+        this.getCurrentDate()
        
         
     },
@@ -91,6 +123,9 @@ export default {
 
             axios.get('/restApi/api/CurrentSum.php')
               .then(res => { this.Ctable = res.data}).catch(err => console.log(err));
+
+              axios.get('/restApi/api/SumToday.php')
+              .then(res => { this.Ttable = res.data}).catch(err => console.log(err));
         },
         
         showModal(id,n){
@@ -104,7 +139,7 @@ export default {
                 j++;
                 }
               }  
-            }else{
+            }else if(n==2){
               j=0;
               for(i=0; i<res.data.length; i++){
                 var dateArray = res.data[i].odate.split('-');
@@ -116,6 +151,14 @@ export default {
                 }
               } 
               
+            }else{
+              j=0;
+              for(i=0; i<res.data.length; i++){
+                if(res.data[i].oloruser == id && res.data[i].odate == this.currentDate){
+                  this.orders[j] = res.data[i];
+                  j++;
+                }
+              }
             }          
           })
           this.show = true;
@@ -133,12 +176,26 @@ export default {
           }else{
             this.bcolorB = 'primary'
           }
+
+          if(this.visibleC){
+            this.bcolorC = 'warning'
+          }else{
+            this.bcolorC = 'primary'
+          }
         },
         
         currentmy(){
           const currentDate = new Date();
           this.currentMonth = currentDate.getMonth() + 1;
           this.currentYear = currentDate.getFullYear();
+        },
+
+        getCurrentDate() {
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0');
+          const day = String(today.getDate()).padStart(2, '0');
+          this.currentDate = `${year}-${month}-${day}`;
         },
     },
     components: { CButton, DelModal }

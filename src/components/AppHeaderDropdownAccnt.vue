@@ -10,7 +10,7 @@
       <CDropdownItem><p>{{ name }} {{ surname }}</p></CDropdownItem>
       <div v-if="utype == 2">
       <CDropdownHeader component="h6" class="bg-light fw-semibold py-2">
-        Παραγγελίες
+        Παραγγελίες 
       </CDropdownHeader>
       <CDropdownItem>
         <CIcon icon="cil-envelope-open" /> Ανοιχτές
