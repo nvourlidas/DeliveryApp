@@ -50,6 +50,15 @@
                 rows="3"
                 style="width: 70%; margin-bottom: 1rem;"
               />
+              <CFormSelect size="lg" class="mb-3"
+            style="width: 70%;"
+             label="Επιλογή Περιοχής"
+             v-model="region">
+                <option>Επιλογή Περιοχής</option>
+                <option value="1">Γιαννιτσά</option>
+                <option value="2">Θεσσαλονίκη</option>
+                
+            </CFormSelect>
                 </CCardbody>
                 <CCardFooter style="text-align: center">
             <CButton  type="submit" size="bg" color="primary" ><CIcon name="cil-check-circle"/> Αποστολή Παραγγελίας</CButton>
@@ -75,6 +84,7 @@ export default {
             liveExampleVisible: false,
             liveExampleVisible2: false,
             liveExampleVisible3: false,
+            region: '',
         }
     },
 
@@ -95,6 +105,7 @@ export default {
                 texta: this.texta,
                 userid: this.user,
                 sname: this.sname,
+                region:this.region
             })
             .catch(err => console.log(err));
 
