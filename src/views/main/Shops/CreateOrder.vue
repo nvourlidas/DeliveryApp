@@ -74,6 +74,7 @@ export default {
             ftoken: localStorage.getItem('ftoken'),
             utype: localStorage.getItem('utype'),
             cilX,
+            region: localStorage.getItem('region'),
         };
     },
     methods: {
@@ -92,6 +93,7 @@ export default {
                             price: this.price,
                             texta: this.texta,
                             userid: this.user,
+                            region: this.region,
                         })
                             .catch(err => console.log(err));
                         this.notif();

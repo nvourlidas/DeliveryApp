@@ -11,8 +11,8 @@
         })
     "
   >
-    <!-- <CSidebarBrand>
-      <CIcon
+    <CSidebarBrand>
+      <!-- <CIcon
         custom-class-name="sidebar-brand-full"
         :icon="logoNegative"
         :height="35"
@@ -21,8 +21,9 @@
         custom-class-name="sidebar-brand-narrow"
         :icon="sygnet"
         :height="35"
-      />
-    </CSidebarBrand> -->
+      /> -->
+      <img src="@/assets/images/Logo2.png">
+    </CSidebarBrand>
     
     <AppSidebarNav v-if="utype == 3"/>
     <AppSidebarNav2 v-if="utype == 2"/>
@@ -118,6 +119,11 @@ export default {
 ul li::marker {
   color: green;
   font-size: 1.7em;
+}
+
+img{
+  width: 50%;
+  border-radius: 50%;
 }
 
 </style>

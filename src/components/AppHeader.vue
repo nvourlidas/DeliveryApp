@@ -80,6 +80,7 @@ export default {
           this.user=resp.data.user
           localStorage.setItem('userid',resp.data.user.userid)
           localStorage.setItem('utype',resp.data.user.utype)
+          localStorage.setItem('region',resp.data.user.region)
           
         }else{
           this.$router.push('/pages/login')

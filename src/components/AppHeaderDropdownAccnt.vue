@@ -8,6 +8,15 @@
         Account
       </CDropdownHeader>
       <CDropdownItem><p>{{ name }} {{ surname }}</p></CDropdownItem>
+      <div v-if="utype != 1">
+      <CDropdownHeader component="h6" class="bg-light fw-semibold py-2">
+        Περιοχή
+      </CDropdownHeader>
+      <CDropdownItem>
+        <p v-if="region == 1">Γιαννιτσά</p>
+        <p v-if="region == 2">Θεσσαλονίκη</p>
+      </CDropdownItem>
+    </div>
       <div v-if="utype == 2">
       <CDropdownHeader component="h6" class="bg-light fw-semibold py-2">
         Παραγγελίες 
@@ -51,6 +60,7 @@ export default {
             userid: localStorage.getItem('userid'),
             currentDate: '',
             utype: localStorage.getItem('utype'),
+            region: localStorage.getItem('region'),
         };
     },
     created() {

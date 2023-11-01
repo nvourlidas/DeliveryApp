@@ -1,5 +1,19 @@
 <template>
-    <div>
+  <div class="button-container">
+    <transition name="fade-slide">
+    <CButton class="big-button" @click="regionA = !regionA, regionB = false, region = 1, toggleButton(1)" 
+    v-if="showButton2"> 
+    Γιαννιτσά</CButton>
+  </transition>
+  <transition name="fade-slide">
+    <CButton class="big-button" @click="regionB = !regionB, regionA = false, region = 2, toggleButton(2)"
+    v-if="showButton1">
+     Θεσσαλονίκη</CButton>
+  </transition>
+</div>
+  <transition name="fade">
+    <div v-if="regionA" class="fading-div">
+      <h3>Βλέπετε για Γιαννιτσά</h3>
       <CButton :color="bcolorC" @click="visibleC = !visibleC, visibleB = false, visibleA = false, color()" >Σήμερα</CButton>
       <CButton :color="bcolorA" @click="visibleA = !visibleA, visibleB = false, visibleC = false, color()" style="margin: 2%;">Τρέχων Μήνας</CButton>
       <CButton :color="bcolorB" @click="visibleB = !visibleB, visibleA = false, visibleC = false, color()"> Από Πάντα</CButton>
@@ -9,7 +23,7 @@
                 :item="entry"
                 :key="id">
                 
-          <CWidgetStatsC  class="mb-3" title="Dels" inverse color="info">
+          <CWidgetStatsC v-if="entry.region == region" class="mb-3" title="Dels" inverse color="info">
             
             <template #icon><CIcon icon="cil-people" height="36"/></template>
             <template #title>{{entry.name}} {{ entry.surname }}</template>
@@ -34,7 +48,7 @@
                 :item="entry"
                 :key="id">
                 
-          <CWidgetStatsC  class="mb-3" title="Dels" inverse color="info">
+          <CWidgetStatsC v-if="entry.region == region"  class="mb-3" title="Dels" inverse color="info">
             
             <template #icon><CIcon icon="cil-people" height="36"/></template>
             <template #title>{{entry.name}} {{ entry.surname }}</template>
@@ -59,7 +73,7 @@
                 :item="entry"
                 :key="id">
                 
-          <CWidgetStatsC  class="mb-3" title="Dels" inverse color="info">
+          <CWidgetStatsC v-if="entry.region == region"  class="mb-3" title="Dels" inverse color="info">
             
             <template #icon><CIcon icon="cil-people" height="36"/></template>
             <template #title>{{entry.name}} {{ entry.surname }}</template>
@@ -80,6 +94,91 @@
   </div>
 </CCollapse>
     </div>
+  </transition>
+  <transition name="fade">
+    <div v-if="regionB">
+      <h3>Βλέπετε για Θεσσαλονίκη</h3>
+      <CButton :color="bcolorC" @click="visibleC = !visibleC, visibleB = false, visibleA = false, color()" >Σήμερα</CButton>
+      <CButton :color="bcolorA" @click="visibleA = !visibleA, visibleB = false, visibleC = false, color()" style="margin: 2%;">Τρέχων Μήνας</CButton>
+      <CButton :color="bcolorB" @click="visibleB = !visibleB, visibleA = false, visibleC = false, color()"> Από Πάντα</CButton>
+      <CCollapse :visible="visibleA">
+      <CRow>
+        <CCol :xs="4" v-for="(entry, id) in Ctable"
+                :item="entry"
+                :key="id">
+                
+          <CWidgetStatsC v-if="entry.region == region" class="mb-3" title="Dels" inverse color="info">
+            
+            <template #icon><CIcon icon="cil-people" height="36"/></template>
+            <template #title>{{entry.name}} {{ entry.surname }}</template>
+            <template #value>
+               Ολοκληρωμένες: {{ entry.olorders }}<br/>
+               Συνολικό Ποσό: {{ entry.tziros }}&euro;<br/>
+              <CButton color="success" @click="showModal(entry.userid,2)">Λεπτομέριες</CButton></template>
+          </CWidgetStatsC>
+        
+        </CCol>
+      </CRow>
+      <div>
+    
+    <DelModal :show-modal="show" @close="show = false, orders= []" :orders="orders" >
+      
+    </DelModal>
+  </div>
+</CCollapse>
+<CCollapse :visible="visibleB">
+      <CRow>
+        <CCol :xs="4" v-for="(entry, id) in table"
+                :item="entry"
+                :key="id">
+                
+          <CWidgetStatsC v-if="entry.region == region"  class="mb-3" title="Dels" inverse color="info">
+            
+            <template #icon><CIcon icon="cil-people" height="36"/></template>
+            <template #title>{{entry.name}} {{ entry.surname }}</template>
+            <template #value>
+               Ολοκληρωμένες: {{ entry.olorders }}<br/>
+               Συνολικό Ποσό: {{ entry.tziros }}&euro;<br/>
+              <CButton color="success" @click="showModal(entry.userid,1)">Λεπτομέριες</CButton></template>
+          </CWidgetStatsC>
+        
+        </CCol>
+      </CRow>
+      <div>
+    
+    <DelModal :show-modal="show" @close="show = false, orders= []" :orders="orders" >
+      
+    </DelModal>
+  </div>
+</CCollapse>
+<CCollapse :visible="visibleC">
+      <CRow>
+        <CCol :xs="4" v-for="(entry, id) in Ttable"
+                :item="entry"
+                :key="id">
+                
+          <CWidgetStatsC v-if="entry.region == region"  class="mb-3" title="Dels" inverse color="info">
+            
+            <template #icon><CIcon icon="cil-people" height="36"/></template>
+            <template #title>{{entry.name}} {{ entry.surname }}</template>
+            <template #value>
+              Ανοιχτές: {{ entry.accorders }}<br />
+               Ολοκληρωμένες: {{ entry.olorders }}<br/>
+               Συνολικό Ποσό: {{ entry.tziros }}&euro;<br/>
+              <CButton color="success" @click="showModal(entry.userid,3)">Λεπτομέριες</CButton></template>
+          </CWidgetStatsC>
+        
+        </CCol>
+      </CRow>
+      <div>
+    
+    <DelModal :show-modal="show" @close="show = false, orders= []" :orders="orders" >
+      
+    </DelModal>
+  </div>
+</CCollapse>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -100,12 +199,17 @@ export default {
             visibleA: false,
             visibleB: false,
             visibleC: false,
+            regionA: false,
+            regionB: false,
             currentMonth: '',
             currentYear: '',
             bcolorA: 'primary',
             bcolorB: 'primary',
             bcolorC: 'primary',
             currentDate: '',
+            region: '',
+            showButton1: true,
+            showButton2: true,
         };
     },
     created() {
@@ -197,6 +301,15 @@ export default {
           const day = String(today.getDate()).padStart(2, '0');
           this.currentDate = `${year}-${month}-${day}`;
         },
+        toggleButton(buttonNumber) {
+          if (buttonNumber === 1) {
+            this.showButton2 = false;
+            this.showButton1 = true;
+          } else if (buttonNumber === 2) {
+            this.showButton1 = false;
+            this.showButton2 = true;
+          }
+        },
     },
     components: { CButton, DelModal }
 }
@@ -222,4 +335,39 @@ export default {
     background-color: #e0e0e0; 
 }
 
+.button-container {
+  text-align: center; 
+}
+
+.big-button {
+  display: inline-block;
+  padding: 15px 30px; 
+  background-color: #3453db;
+  color: #fff;
+  font-size: 18px; 
+  border: none;
+  cursor: pointer;
+  margin: 5px; 
+  width: 30%;
+}
+
+.big-button:hover {
+  background-color: #287a2c; 
+}
+
+.fade-slide-enter-active, .fade-slide-leave-active {
+  transition: opacity 1.5s, transform 0.5s;
+}
+.fade-slide-enter, .fade-slide-leave-to {
+  opacity: 0;
+  transform: translateX(250px);
+}
+
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>

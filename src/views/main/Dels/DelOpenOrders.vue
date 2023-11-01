@@ -3,10 +3,10 @@
         <div v-for="(entry, id) in table"
                 :item="entry"
                 :key="id">
-            <CRow v-if="entry.state != 3">
+            <CRow v-if="entry.state != 3 && entry.region == region">
                 <CCol md="12" >    
                     <CCard style="margin-bottom: 2rem; border: 2px solid #000;">
-                        <CCardHeader :class="{ highlight: highlightNewRow }">
+                        <CCardHeader style="text-align: center;">
                                    <h3>Κατάστημα: {{ entry.name }} </h3>
                         </CCardHeader>
                         <div class="card1">
@@ -57,6 +57,7 @@ export default {
             fer:'',
             lastid: '',
             utype: localStorage.getItem('utype'),
+            region: localStorage.getItem('region'),
             
         }
     },
@@ -152,14 +153,5 @@ export default {
     background-color: #e0e0e0; 
 }
 
-.highlight {
-  background-color: red;
-  /* transition: background-color 10s; Transition the color property over 10 seconds */
-  text-align: center;
-}
-
-.newel.show {
-  background-color: red;
-}
 
 </style>

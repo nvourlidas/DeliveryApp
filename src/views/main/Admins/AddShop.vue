@@ -39,7 +39,15 @@
               placeholder="Προσθήκη Ονόματος..."
               style="width: 70%; margin-bottom: 1rem;"
             /> 
-            
+            <CFormSelect size="lg" class="mb-3"
+            style="width: 70%;"
+             label="Επιλογή Περιοχής"
+             v-model="region">
+                <option>Επιλογή Περιοχής</option>
+                <option value="1">Γιαννιτσά</option>
+                <option value="2">Θεσσαλονίκη</option>
+                
+            </CFormSelect>
 
                 </CCardbody>
                 <CCardFooter style="text-align: center">
@@ -61,6 +69,7 @@ export default {
             username: '',
             password: '',
             name: '',
+            region: '',
 
             user:localStorage.getItem('userid'),
             liveExampleVisible: false,
@@ -79,6 +88,7 @@ export default {
                 password: this.password,
                 name: this.name,
                 usertype: 3,
+                region: this.region,
             })
             .catch(err => console.log(err));
 
