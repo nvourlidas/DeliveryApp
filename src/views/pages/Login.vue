@@ -13,28 +13,15 @@
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput
-                    placeholder="Username"
-                    autocomplete="username email"
-                    v-model="username"
-                    :is-valid="validator"
-                    
-                    invalid-feedback="Δωστε username"
-                    />
+                    <CFormInput placeholder="Username" autocomplete="username email" v-model="username"
+                      :is-valid="validator" invalid-feedback="Δωστε username" />
                   </CInputGroup>
                   <CInputGroup class="mb-4">
                     <CInputGroupText>
                       <CIcon icon="cil-lock-locked" />
                     </CInputGroupText>
-                    <CFormInput
-                    placeholder="Password"
-                    type="password"
-                    autocomplete="curent-password"
-                    v-model="password"
-                    :is-valid="validator"
-                    
-                    invalid-feedback="Δώστε password"
-                    />
+                    <CFormInput placeholder="Password" type="password" autocomplete="curent-password" v-model="password"
+                      :is-valid="validator" invalid-feedback="Δώστε password" />
                   </CInputGroup>
                   <CRow>
                     <CCol>
@@ -82,32 +69,32 @@ export default {
   data() {
     return {
       username: '',
-      password:'',
+      password: '',
       userid: '',
-    
+
     }
   },
   methods: {
     login() {
-      axios.post('/login/login.php',{username:this.username,password:this.password})
-        .then(resp=>{
-          if(resp.data.res==1){
-             localStorage.setItem('token',resp.data.jwt);
-             this.userid=resp.data.userid;
-             this.online(this.userid)
-      this.$router.push('/')
-        }else{
-          alert("Τα στοιχεία είναι Λανθασμένα");
-        }
+      axios.post('/login/login.php', { username: this.username, password: this.password })
+        .then(resp => {
+          if (resp.data.res == 1) {
+            localStorage.setItem('token', resp.data.jwt);
+            this.userid = resp.data.userid;
+            this.online(this.userid)
+            this.$router.push('/')
+          } else {
+            alert("Τα στοιχεία είναι Λανθασμένα");
+          }
         })
         .catch(err => console.log(err));
     },
-    validator (val) {
+    validator(val) {
       return val ? val.length >= 1 : false
     },
 
-    online(id){
-      axios.post('/restApi/api/online.php',{userid: id, status:0})
+    online(id) {
+      axios.post('/restApi/api/online.php', { userid: id, status: 0 })
     }
   },
 }

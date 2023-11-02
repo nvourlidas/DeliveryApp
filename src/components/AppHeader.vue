@@ -11,16 +11,16 @@
         <CNavItem>
           <h5> {{ name }} {{ surname }}</h5>
         </CNavItem> -->
-        <!-- <CNavItem>
+      <!-- <CNavItem>
           <CNavLink href="#">Users</CNavLink>
         </CNavItem>
         <CNavItem>
           <CNavLink href="#">Settings</CNavLink>
         </CNavItem> -->
       <!-- </CHeaderNav> -->
-    
-        <img src="@/assets/images/Logo2.png">
-      
+
+      <img src="@/assets/images/Logo2.png">
+
       <CHeaderNav>
         <!-- <CNavItem>
           <CNavLink href="#">
@@ -57,13 +57,13 @@ export default {
   name: 'AppHeader',
   components: {
     //AppBreadcrumb,
-   AppHeaderDropdownAccnt,
+    AppHeaderDropdownAccnt,
   },
 
-  data(){
-    return{
-      token:localStorage.getItem('token'),
-      user:[],
+  data() {
+    return {
+      token: localStorage.getItem('token'),
+      user: [],
       userid: localStorage.getItem('userid'),
     }
   },
@@ -73,33 +73,33 @@ export default {
     }
   },
 
-  created(){
-     axios.post('/login/validate.php',{ jwt: this.token})
-       .then(resp=>{
-          if(resp.data.res!=1){
-          this.user=resp.data.user
-          localStorage.setItem('userid',resp.data.user.userid)
-          localStorage.setItem('utype',resp.data.user.utype)
-          localStorage.setItem('region',resp.data.user.region)
-          
-        }else{
+  created() {
+    axios.post('/login/validate.php', { jwt: this.token })
+      .then(resp => {
+        if (resp.data.res != 1) {
+          this.user = resp.data.user
+          localStorage.setItem('userid', resp.data.user.userid)
+          localStorage.setItem('utype', resp.data.user.utype)
+          localStorage.setItem('region', resp.data.user.region)
+
+        } else {
           this.$router.push('/pages/login')
         }
-  })
-        .catch(err => console.log(err));
-        console.log(this.token)
+      })
+      .catch(err => console.log(err));
+    console.log(this.token)
   },
 }
 </script>
 
 <style scoped>
-img{
+img {
   width: 20%;
 }
 
 @media (max-width: 600px) {
-            img {
-                width: 40%;
-            }
-        }
+  img {
+    width: 40%;
+  }
+}
 </style>

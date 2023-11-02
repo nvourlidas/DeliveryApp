@@ -1,16 +1,10 @@
 <template>
-  <CSidebar
-    position="fixed"
-    :unfoldable="sidebarUnfoldable"
-    :visible="sidebarVisible"
-    @visible-change="
-      (event) =>
-        $store.commit({
-          type: 'updateSidebarVisible',
-          value: event,
-        })
-    "
-  >
+  <CSidebar position="fixed" :unfoldable="sidebarUnfoldable" :visible="sidebarVisible" @visible-change="(event) =>
+      $store.commit({
+        type: 'updateSidebarVisible',
+        value: event,
+      })
+    ">
     <CSidebarBrand>
       <!-- <CIcon
         custom-class-name="sidebar-brand-full"
@@ -24,21 +18,18 @@
       /> -->
       <img src="@/assets/images/Logo2.png">
     </CSidebarBrand>
-    
-    <AppSidebarNav v-if="utype == 3"/>
-    <AppSidebarNav2 v-if="utype == 2"/>
-    <AppSidebarNav3 v-if="utype == 1"/>
+
+    <AppSidebarNav v-if="utype == 3" />
+    <AppSidebarNav2 v-if="utype == 2" />
+    <AppSidebarNav3 v-if="utype == 1" />
     <div v-if="utype == 1">
       <h3>Online Διανομείς: </h3>
       <p v-if="table.length == 0">Κανένας Online</p>
-        <ul>
-          <li v-for="item in table" :key="item.id">{{ item.name }} {{ item.surname }}</li>
-        </ul>
+      <ul>
+        <li v-for="item in table" :key="item.id">{{ item.name }} {{ item.surname }}</li>
+      </ul>
     </div>
-    <CSidebarToggler
-      class="d-none d-lg-flex"
-      @click="$store.commit('toggleUnfoldable')"
-    />
+    <CSidebarToggler class="d-none d-lg-flex" @click="$store.commit('toggleUnfoldable')" />
   </CSidebar>
 </template>
 
@@ -60,46 +51,48 @@ export default {
     AppSidebarNav3,
   },
 
-  data(){
-    return{
-      utype:'',
-      user:[],
-      token:localStorage.getItem('token'),
+  data() {
+    return {
+      utype: '',
+      user: [],
+      token: localStorage.getItem('token'),
       table: [],
     }
   },
 
-  created(){
-     this.validate()
+  created() {
+    this.validate()
     this.online()
     setInterval(this.online, 3000)
 
   },
 
-  
+
 
   methods: {
-    validate(){
-      axios.post('/login/validate.php',{ jwt: this.token})
-       .then(resp=>{
-          this.utype=resp.data.user.utype,
-          this.user=resp.data.user}
-  )
+    validate() {
+      axios.post('/login/validate.php', { jwt: this.token })
+        .then(resp => {
+          this.utype = resp.data.user.utype,
+            this.user = resp.data.user
+        }
+        )
         .catch(err => console.log(err));
     },
 
-    online(){
+    online() {
       axios.get('/restApi/api/ReadAllUsers.php')
-                .then(res => {var j=0;
-                  this.table=[];
-                  for(var i=0; i<res.data.length; i++){
-                    if(res.data[i].online == 1 && res.data[i].usertype == 2){
-                      this.table[j] = res.data[i]
-                      j++
-                    }
-                  }
-                  })
-                  .catch(err => console.log(err));
+        .then(res => {
+          var j = 0;
+          this.table = [];
+          for (var i = 0; i < res.data.length; i++) {
+            if (res.data[i].online == 1 && res.data[i].usertype == 2) {
+              this.table[j] = res.data[i]
+              j++
+            }
+          }
+        })
+        .catch(err => console.log(err));
     },
   },
 
@@ -121,9 +114,8 @@ ul li::marker {
   font-size: 1.7em;
 }
 
-img{
+img {
   width: 50%;
   border-radius: 50%;
 }
-
 </style>
