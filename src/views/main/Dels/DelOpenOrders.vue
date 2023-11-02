@@ -124,7 +124,8 @@ export default {
         axios.post('/restApi/api/firebaseNot.php', {
                 userid: localStorage.getItem('userid'),
                 utype: 2,
-                orderid:id
+                orderid:id,
+                region: this.region
             })
             .catch(err => console.log(err));
     },

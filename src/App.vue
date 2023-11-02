@@ -47,6 +47,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const utype = localStorage.getItem('utype')
 const userid = localStorage.getItem('userid')
+const region = localStorage.getItem('region')
 app
 const messaging = getMessaging();
 onMessage(messaging, (payload) => {
@@ -73,6 +74,7 @@ axios.post('/restApi/api/fbtokens.php', {
               token: currentToken,
               utype: utype,
               userid: userid,
+              region: region,
           })
           .catch(err => console.log(err));
 

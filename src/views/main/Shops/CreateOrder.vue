@@ -116,7 +116,8 @@ export default {
         notif() {
             axios.post('/restApi/api/firebaseNot.php', {
                 userid: localStorage.getItem('userid'),
-                utype: this.utype
+                utype: this.utype,
+                region: this.region
             })
                 .catch(err => console.log(err));
         },
